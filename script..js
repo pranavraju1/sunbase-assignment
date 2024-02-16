@@ -4,24 +4,28 @@ const selectBtn = document.querySelector("#selectBtn");
 const textareaBtn = document.querySelector("#textareaBtn");
 const main = document.querySelector(".main");
 
+//adding input textregion
 inputBtn.addEventListener("click", (e) => {
   e.preventDefault();
   const inputItem = createInputItem("Sample Input");
   main.appendChild(inputItem);
 });
 
+//adding select dropdown
 selectBtn.addEventListener("click", (e) => {
   e.preventDefault();
   const inputItem = createInputItem("Sample Select");
   main.appendChild(inputItem);
 });
 
+//adding textarea
 textareaBtn.addEventListener("click", (e) => {
   e.preventDefault();
   const inputItem = createInputItem("Sample Textarea");
   main.appendChild(inputItem);
 });
 
+//common create form for inputs
 function createInputItem(labelText) {
   const inputItem = document.createElement("div");
   inputItem.className = "input-item";
@@ -42,13 +46,13 @@ function createInputItem(labelText) {
   inputItem.appendChild(details);
 
   const input = document.createElement("input");
-  if (labelText === "Sample Textarea") {
+  if (labelText === "Sample Textarea") {                  //for textarea
     const textarea = document.createElement("textarea");
     textarea.cols = "20";
     textarea.rows = "10";
     textarea.placeholder = "Please enter in textarea";
     inputItem.appendChild(textarea);
-  } else if (labelText === "Sample Select") {
+  } else if (labelText === "Sample Select") {             //for select dropdown
     const select = document.createElement("select");
     for (let i = 0; i < 3; i++) {
       const option = document.createElement("option");
@@ -57,40 +61,40 @@ function createInputItem(labelText) {
       select.appendChild(option);
     }
     inputItem.appendChild(select);
-  } else {
+  } else {                                                //for input text
     input.placeholder = "Please enter";
     input.type = "text";
     inputItem.appendChild(input);
   }
 
+  // draggable item
   inputItem.addEventListener("dragstart", () => {
     inputItem.classList.add("dragging");
   });
-
   inputItem.addEventListener("dragend", () => {
     inputItem.classList.remove("dragging");
   });
 
-  button.addEventListener("click", () => {
+  button.addEventListener("click", () => {                //delete button
     inputItem.remove();
   });
 
   return inputItem;
 }
 
-main.addEventListener("dragover", (e) => {
+main.addEventListener("dragover", (e) => {              //element drop place logic
   e.preventDefault();
   const afterElement = getDragAfterElement(main, e.clientY);
   console.log(afterElement);
   const draggable = document.querySelector(".dragging");
   if (afterElement == null) {
-    main.appendChild(draggable);
+    main.appendChild(draggable);                        //if not existing place at end
   } else {
-    main.insertBefore(draggable, afterElement);
+    main.insertBefore(draggable, afterElement);         //else place before
   }
 });
 
-function getDragAfterElement(main, y) {
+function getDragAfterElement(main, y) {                 //logic to get next element while dragging
   const draggableElements = [
     ...main.querySelectorAll(".input-item:not(.dragging)"),
   ];
@@ -100,9 +104,9 @@ function getDragAfterElement(main, y) {
       // console.log(box);
       const offset = Math.floor(y - box.top - box.height / 2);
       console.log(offset);
-      if (offset < 0 && offset > closest.offset) {
+      if (offset < 0 && offset > closest.offset) {      //if less than zero element hovering on elemnts abovve
         return { offset: offset, element: child };
-      } else {
+      } else {                                          //else element is hovering on elemnts below
         return closest;
       }
     },
@@ -113,12 +117,12 @@ function getDragAfterElement(main, y) {
 form.addEventListener("click", (e) => {
   e.preventDefault();
   let inputItems = document.querySelectorAll(".input-item");
-  if(inputItems.length === 0){
+  if(inputItems.length === 0){                          //checking if any element is added in form
     alert("Add Form Elements");
     return;
   }
   let obj = [];
-  inputItems.forEach((item,index) => {
+  inputItems.forEach((item,index) => {                //preparing json output
     let type = item.childNodes[1].localName;
     if (type === "input") {
       obj.push({
