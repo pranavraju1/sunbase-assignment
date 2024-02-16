@@ -137,7 +137,7 @@ form.addEventListener("click", (e) => {
         id: new Date().getTime()+index,
         type: type,
         label: item.childNodes[0].firstChild.innerText,
-        option: selectOptions,
+        options: selectOptions,
         value: item.childNodes[1].value
       });
     }else if (type === "textarea") {
@@ -150,9 +150,10 @@ form.addEventListener("click", (e) => {
       });
     }    
   });
-  console.log(obj);
   let displayDetails = document.querySelector(".dispaly-detail") ;
+  console.log(obj);
   const objJson = JSON.stringify(obj);
+  console.log(objJson);
   displayDetails.innerText = objJson; 
 
 });
