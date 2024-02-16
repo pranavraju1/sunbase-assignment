@@ -122,6 +122,17 @@ label{
 #submit{
   margin-top: 50px;
 }
+.delete{
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-radius: 50px;
+  margin-left: 10px;
+}
+
+
+
 
 @media (max-width: 500px){
   .container{

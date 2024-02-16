@@ -34,6 +34,7 @@ function createInputItem(labelText) {
   label.innerText = labelText;
 
   const button = document.createElement("button");
+  button.className = "delete"
   button.innerText = "Delete";
 
   details.appendChild(label);
